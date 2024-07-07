@@ -1,16 +1,16 @@
 ## Scoring Checklist
 
 1. **ESLint Setup (15 points)**
-   - [V] ESLint is set up.
-   - [V] Running the lint command produces no errors (warnings may reduce the score).
+   - [x] ESLint is set up.
+   - [x] Running the lint command produces no errors (warnings may reduce the score).
 
 2. **Prettier Setup (15 points)**
-   - [V] Prettier is set up.
-   - [V] The `format:fix` command fixes issues.
+   - [x] Prettier is set up.
+   - [x] The `format:fix` command fixes issues.
 
 3. **Husky Setup (10 points)**
-   - [V] Husky is set up.
-   - [V] Linting is run on pre-commit.
+   - [x] Husky is set up.
+   - [x] Linting is run on pre-commit.
 
 4. **Page Layout (20 points)**
    - [ ] Page is split into two sections:
