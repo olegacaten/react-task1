@@ -1,9 +1,9 @@
 .Container {
+  padding: 50px;
   display: flex; 
   flex-direction: column;
   justify-content: center; 
   align-items: center; 
-  height: 100%;
   background-color: #f0f0f0;
 }
 
@@ -25,3 +25,18 @@
   outline: none;
 }
 
+.Container__pokedex-result{
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  width: 320px;
+}
+
+
+.Container__pokedex-result__card{
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 5px;
+  width: 45%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
