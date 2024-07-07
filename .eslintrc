@@ -1,4 +1,9 @@
 {
+  "env": {
+    "browser": true
+  },
+  "root": true,
+
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -7,27 +12,35 @@
     "plugin:jsx-a11y/recommended",
     "plugin:@typescript-eslint/recommended",
     "eslint-config-prettier",
+    "plugin:prettier/recommended",
     "prettier"
   ],
+
   "settings": {
     "react": {
       "version": "detect"
     },
+
     "import/resolver": {
       "node": {
-        "paths": [
-          "src"
-        ],
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
   },
   "rules": {
+    "prettier/prettier": ["error"],
+    "semi": ["error", "always"],
+    "object-curly-spacing": ["error", "always"],
+    "camelcase": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-inferrable-types": [
+      "warn",
+      {
+        "ignoreParameters": true
+      }
+    ],
+
     "@typescript-eslint/no-explicit-any": "error",
     "no-unused-vars": [
       "error",
@@ -39,6 +52,5 @@
       }
     ],
     "react/react-in-jsx-scope": "off"
-    
   }
 }
