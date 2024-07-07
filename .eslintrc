@@ -1,56 +1,91 @@
 {
-  "env": {
-    "browser": true
-  },
-  "root": true,
-
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:import/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "eslint-config-prettier",
-    "plugin:prettier/recommended",
-    "prettier"
-  ],
-
-  "settings": {
-    "react": {
-      "version": "detect"
-    },
-
-    "import/resolver": {
-      "node": {
-        "paths": ["src"],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
-  },
-  "rules": {
-    "prettier/prettier": ["error"],
-    "semi": ["error", "always"],
-    "object-curly-spacing": ["error", "always"],
-    "camelcase": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-inferrable-types": [
-      "warn",
-      {
-        "ignoreParameters": true
-      }
-    ],
-
-    "@typescript-eslint/no-explicit-any": "error",
-    "no-unused-vars": [
-      "error",
-      {
-        "vars": "all",
-        "args": "after-used",
-        "ignoreRestSiblings": true,
-        "argsIgnorePattern": "^_"
-      }
-    ],
-    "react/react-in-jsx-scope": "off"
-  }
+	"env": {
+		"browser": true
+	},
+	"root": true,
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:react-hooks/recommended",
+		"plugin:import/recommended",
+		"plugin:jsx-a11y/recommended",
+		"plugin:@typescript-eslint/recommended",
+		"eslint-config-prettier",
+		"plugin:prettier/recommended",
+		"prettier",
+		"eslint:recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint", "react", "react-hooks"],
+	"settings": {
+		"react": {
+			"version": "detect"
+		},
+		"import/resolver": {
+			"node": {
+				"paths": ["src"],
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		}
+	},
+	"rules": {
+		"react-hooks/rules-of-hooks": 2,
+		"react-hooks/exhaustive-deps": 1,
+		"react/no-direct-mutation-state": 2,
+		"no-restricted-properties": [
+			"error",
+			{
+				"object": "document",
+				"property": "getElementById"
+			},
+			{
+				"object": "document",
+				"property": "querySelector"
+			},
+			{
+				"object": "document",
+				"property": "querySelectorAll"
+			},
+			{
+				"object": "window",
+				"property": "alert"
+			},
+			{
+				"object": "window",
+				"property": "prompt"
+			},
+			{
+				"object": "window",
+				"property": "confirm"
+			}
+		],
+		"@typescript-eslint/ban-ts-comment": [
+			2,
+			{
+				"ts-ignore": true
+			}
+		],
+		"prettier/prettier": ["error"],
+		"semi": ["error", "always"],
+		"object-curly-spacing": ["error", "always"],
+		"camelcase": "off",
+		"@typescript-eslint/explicit-function-return-type": 0,
+		"@typescript-eslint/no-inferrable-types": [
+			"warn",
+			{
+				"ignoreParameters": true
+			}
+		],
+		"@typescript-eslint/no-explicit-any": 2,
+		"no-unused-vars": [
+			2,
+			{
+				"vars": "all",
+				"args": "after-used",
+				"ignoreRestSiblings": true,
+				"argsIgnorePattern": "^_"
+			}
+		],
+		"react/react-in-jsx-scope": 0
+	}
 }
