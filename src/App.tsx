@@ -55,8 +55,8 @@ class App extends React.Component<object, MyState> {
     });
   };
 
-  fetchPokemonData = async () => {
-    this.setState({ isLoading: true }); 
+  fetchPokemonData = async (url?: string) => {
+    this.setState({ isLoading: true });
     try {
       let data;
       if (this.state.SearchWord) {
@@ -64,31 +64,24 @@ class App extends React.Component<object, MyState> {
           `https://pokeapi.co/api/v2/pokemon/${this.state.SearchWord}`
         );
         data = await response.json();
-        this.setState({ DetailedPokemon: [data], isLoading: false }); // Set isLoading to false after fetching single Pokemon
+        this.setState({ DetailedPokemon: [data], isLoading: false });
       } else {
-     
-        
-        let apiUrl = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=6'; // Default URL
-        if (this.state.PokemonList && (this.state.PokemonList.next || this.state.PokemonList.previous)) {
-
-          apiUrl = this.state.PokemonList.next || this.state.PokemonList.previous; 
-        }
+        const apiUrl = url ? url : 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=6';
         const response = await fetch(apiUrl);
         data = await response.json();
         this.setState({ PokemonList: data });
-
         if (!this.state.fetchingDetailed) {
-          this.setState({ fetchingDetailed: true }, () => { 
-            this.fetchDetailedPokemon(); 
+          this.setState({ fetchingDetailed: true }, () => {
+            this.fetchDetailedPokemon();
           });
         }
       }
-      console.log('Successful fetchPokemonData');
     } catch (error) {
       console.error('Error fetching Pokemon data:', error);
       this.setState({ DetailedPokemon: null, isLoading: false });
     }
   };
+
 
 
   fetchDetailedPokemon = async () => {
@@ -117,9 +110,9 @@ class App extends React.Component<object, MyState> {
 
   handlePagination = (nextPage: boolean) => {
     if (this.state.PokemonList) {
-      const url = nextPage ? this.state.PokemonList.next : this.state.PokemonList.previous; 
+      const url = nextPage ? this.state.PokemonList.next : this.state.PokemonList.previous;
       if (url) {
-        this.fetchPokemonData();
+        this.fetchPokemonData(url);
       }
     }
   };
@@ -127,85 +120,58 @@ class App extends React.Component<object, MyState> {
 
 
   render() {
-    return (
-      <div className="Container">
-           {this.state.isLoading && <div>Loading...</div>}
-        <div className="Container__search-container">
-          <input
-            type="text"
-            value={this.state.SearchWord}
-            onChange={this.InputChange}
-            placeholder="Type your search word"
-            className="Container__search-container__input"
-          />
-          <button onClick={this.fetchPokemonData} className="Container__search-container__button">
-            Search
-          </button>
-        </div>
-        <div className="Container__pokedex-result">
-      
-          {this.state.DetailedPokemon && this.state.DetailedPokemon.length === 1 ? (
-            <div className="Container__pokedex-result__card">
-              {this.state.DetailedPokemon[0].id ? `"${this.state.DetailedPokemon[0].id}"` : 'id not available'}
-              {this.state.DetailedPokemon[0].types.length > 0 ? (
-                this.state.DetailedPokemon[0].types.map((type) => type.type.name).join(', ')
-              ) : (
-                'No Type Available'
-              )}
-              {this.state.DetailedPokemon[0].name ? `"${this.state.DetailedPokemon[0].name}"` : 'Name not available'}
-              {this.state.DetailedPokemon[0].sprites && this.state.DetailedPokemon[0].sprites.front_default ? (
-                <img src={this.state.DetailedPokemon[0].sprites.front_default} alt={this.state.DetailedPokemon[0].name} />
-              ) : (
-                'No Image Available'
-              )}
-            </div>
-          ) : (
-            <>
-   
-            
-
-         
-              {this.state.DetailedPokemon ? (
-                this.state.DetailedPokemon.map((pokemon: Pokemon, index) => {
-                  return (
-                    <div key={index} className="Container__pokedex-result__card">
-                      {pokemon.id ? `"${pokemon.id}"` : 'id not available'}
-                      {pokemon.types.length > 0 ? (
-                        pokemon.types.map((type) => type.type.name).join(', ')
-                      ) : (
-                        'No Type Available'
-                      )}
-                      {pokemon.name ? `"${pokemon.name}"` : 'Name not available'}
-                      {pokemon.sprites && pokemon.sprites.front_default ? (
-                        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-                      ) : (
-                        'No Image Available'
-                      )}
-                    </div>
-                  );
-                })
-              ) : (
-                'No Data Available'
-              )}
-            </>
-          )}
-
-{this.state.PokemonList && (
-                <>
-                  {this.state.PokemonList.previous && (
-                    <button onClick={() => this.handlePagination(false)}>Previous</button>
-                  )}
-                  {this.state.PokemonList.next && (
-                    <button onClick={() => this.handlePagination(true)}>Next</button>
-                  )}
-                </>
-              )}
-        </div>
-
-
+    return (     <div className="Container">
+      {this.state.isLoading && <div>Loading...</div>}
+      <div className="Container__search-container">
+        <input
+          type="text"
+          value={this.state.SearchWord}
+          onChange={this.InputChange}
+          placeholder="Type your search word"
+          className="Container__search-container__input"
+        />
+        <button onClick={this.fetchPokemonData} className="Container__search-container__button">
+          Search
+        </button>
       </div>
-    );
-  }
+      <div className="Container__pokedex-result">
+        {this.state.DetailedPokemon ? (
+          this.state.DetailedPokemon.map((pokemon, index) => (
+            <PokemonCard key={index} pokemon={pokemon} />
+          ))
+        ) : (
+          'No Data Available'
+        )}
+        {this.state.PokemonList && this.state.DetailedPokemon && this.state.DetailedPokemon.length > 1 && (
+          <div className="Container__pagination">
+            {this.state.PokemonList.previous && (
+              <button onClick={() => this.handlePagination(false)}>Previous</button>
+            )}
+            {this.state.PokemonList.next && (
+              <button onClick={() => this.handlePagination(true)}>Next</button>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
+};
 
+const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => (
+  <div className="Container__pokedex-result__card">
+    {pokemon.id ? `"${pokemon.id}"` : 'ID not available'}
+    {pokemon.types.length > 0 ? (
+      pokemon.types.map((type) => type.type.name).join(', ')
+    ) : (
+      'No Type Available'
+    )}
+    {pokemon.name ? `"${pokemon.name}"` : 'Name not available'}
+    {pokemon.sprites && pokemon.sprites.front_default ? (
+      <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+    ) : (
+      'No Image Available'
+    )}
+  </div>
+);
 export default App;
