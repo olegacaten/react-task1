@@ -56,18 +56,18 @@ class App extends React.Component<object, MyState> {
   };
 
   fetchPokemonData = async () => {
-    this.setState({ isLoading: true }); // Show loading indicator
+    this.setState({ isLoading: true }); 
     try {
       let data;
       if (this.state.SearchWord) {
-        // Fetch single Pokemon by name
         const response = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${this.state.SearchWord}`
         );
         data = await response.json();
         this.setState({ DetailedPokemon: [data], isLoading: false }); // Set isLoading to false after fetching single Pokemon
       } else {
-        // Fetch list of Pokemon
+     
+        
         let apiUrl = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=6'; // Default URL
         if (this.state.PokemonList && (this.state.PokemonList.next || this.state.PokemonList.previous)) {
 
@@ -77,7 +77,6 @@ class App extends React.Component<object, MyState> {
         data = await response.json();
         this.setState({ PokemonList: data });
 
-        // Fetch detailed data after fetching the initial list
         if (!this.state.fetchingDetailed) {
           this.setState({ fetchingDetailed: true }, () => { 
             this.fetchDetailedPokemon(); 
@@ -144,7 +143,7 @@ class App extends React.Component<object, MyState> {
           </button>
         </div>
         <div className="Container__pokedex-result">
-          {/* Check if a single Pokemon is being displayed */}
+      
           {this.state.DetailedPokemon && this.state.DetailedPokemon.length === 1 ? (
             <div className="Container__pokedex-result__card">
               {this.state.DetailedPokemon[0].id ? `"${this.state.DetailedPokemon[0].id}"` : 'id not available'}
@@ -162,10 +161,10 @@ class App extends React.Component<object, MyState> {
             </div>
           ) : (
             <>
-              {/* If multiple Pokemon, show pagination buttons */}
+   
             
 
-              {/* Display the Pokemon list */}
+         
               {this.state.DetailedPokemon ? (
                 this.state.DetailedPokemon.map((pokemon: Pokemon, index) => {
                   return (
