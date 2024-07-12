@@ -1,10 +1,9 @@
 import { PokemonResponse, DetailedPokemon } from "../interfaces";
 
-
 export async function GetAllPokemons():Promise<DetailedPokemon[]> {
 
   const UrlPokemon: string = 'https://pokeapi.co/api/v2/pokemon';
-  const next = `${UrlPokemon}?limit=2000&offset=0`;
+  const next = `${UrlPokemon}?limit=20&offset=0`;
  try {
   
   const Response = await fetch(next);
@@ -16,7 +15,6 @@ export async function GetAllPokemons():Promise<DetailedPokemon[]> {
   const detailedPokemons = await Promise.all(pokemonNamesObj.results.map(async (pokemon) => {
     return GetAllDetailedPokemons(pokemon.url);
   }));
-  console.log(detailedPokemons);
   return detailedPokemons;
 
 } catch (error) {
@@ -25,6 +23,7 @@ export async function GetAllPokemons():Promise<DetailedPokemon[]> {
 
 }
 };
+
 
 
 

@@ -1,6 +1,8 @@
+
+
 export interface StateProps {
   SearchWord: string;
-  detailedPokemons_Obj:[] |undefined;
+  detailedPokemons_Obj: DetailedPokemon[] | undefined;
 }
 
 export interface Pokemon {
@@ -17,14 +19,18 @@ export interface PokemonResponse {
 
 
 export interface DetailedPokemon {
-height: number;
-id: number;
-name: string;
-sprites: {
-  front_default: string;
-};
-weight: number;
+  height: number;
+  id: number;
+  name: string;
+  sprites: {
+    front_default: string;
+  };
+  weight: number;
+  types: PokemonType[];
+}
+
+interface PokemonType {
   type: {
     name: string;
-  }[];
+  };
 }

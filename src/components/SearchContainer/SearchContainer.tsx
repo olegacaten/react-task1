@@ -4,19 +4,29 @@ import { LocalStorageGet , LocalStorageWrite } from '../../utils/LocalStorage';
 import { GetAllPokemons } from '../../api/FetchPokemon';
 import ResultContainer from '../ResultContainer/ResultContainer';
 
-export default class SearchContainer extends Component<undefined, StateProps> {
+
+interface Props {};
+
+export default class SearchContainer extends Component<Props, StateProps> {
 state:StateProps = {
     SearchWord: '',
     detailedPokemons_Obj: undefined,
 };
 
 
-    componentDidMount() {
-    const LocalStorageSavedWorld: string = LocalStorageGet('SearchWord');
-    this.setState({SearchWord: LocalStorageSavedWorld});
-    const detailedPokemons_Obj = await GetAllPokemons();
-    this.setState({ detailedPokemons_Obj });
-
+    async componentDidMount() {
+      const LocalStorageSavedWorld = LocalStorageGet('SearchWord');
+      this.setState({ SearchWord: LocalStorageSavedWorld });
+      if (this.state.detailedPokemons_Obj === undefined) {
+   
+        const detailedPokemons_Obj = await GetAllPokemons();
+        console.log(this.state.detailedPokemons_Obj);
+        this.setState({ detailedPokemons_Obj: detailedPokemons_Obj });
+    
+        console.log("ComponentdidMountworked");
+      }
+      else return;
+  
     }
 
     handleChangeInputSave = (e: React.ChangeEvent<HTMLInputElement>) =>{
@@ -43,7 +53,7 @@ state:StateProps = {
           SEARCH
         </button>
         
-        <ResultContainer results={detailedPokemons}/>
+        <ResultContainer results={this.state.detailedPokemons_Obj}/>
       </div>
     )
   }

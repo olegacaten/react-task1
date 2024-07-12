@@ -10,8 +10,10 @@ export default class PokemonCard extends Component <{pokemon: DetailedPokemon}> 
         </div>
         <div className="Card__container">
         <div className="Card__container__types">
-            {pokemon.type.map((type)=>(
-                <span key={type.name}>{type.name}</span>
+            {pokemon.types.map((typeGroup, index)=>(
+              <div key={index}>
+                {typeGroup.type.name}
+              </div>
             ))}
         </div>
         <div className="Card__container__img">{pokemon.sprites.front_default}</div>
