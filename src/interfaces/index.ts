@@ -3,6 +3,7 @@
 export interface StateProps {
   SearchWord: string;
   detailedPokemons_Obj: DetailedPokemon[] | undefined;
+  filteredPokemons: DetailedPokemon[] | undefined;
 }
 
 export interface Pokemon {
@@ -19,13 +20,12 @@ export interface PokemonResponse {
 
 
 export interface DetailedPokemon {
-  height: number;
   id: number;
   name: string;
   sprites: {
     front_default: string;
   };
-  weight: number;
+
   types: PokemonType[];
 }
 

@@ -11,6 +11,7 @@ export default class SearchContainer extends Component<Props, StateProps> {
 state:StateProps = {
     SearchWord: '',
     detailedPokemons_Obj: undefined,
+    filteredPokemons: undefined,
 };
 
 
@@ -21,13 +22,26 @@ state:StateProps = {
    
         const detailedPokemons_Obj = await GetAllPokemons();
         console.log(this.state.detailedPokemons_Obj);
-        this.setState({ detailedPokemons_Obj: detailedPokemons_Obj });
+        this.setState({ detailedPokemons_Obj,filteredPokemons: detailedPokemons_Obj });
     
         console.log("ComponentdidMountworked");
       }
       else return;
   
     }
+
+    filterPokemons = () => {
+        const {SearchWord, detailedPokemons_Obj} = this.state;
+        if((!detailedPokemons_Obj)||(!SearchWord.trim())){
+          this.setState({filteredPokemons:detailedPokemons_Obj });
+          return;
+        }
+
+        const filtered = 
+
+  };
+  
+
 
     handleChangeInputSave = (e: React.ChangeEvent<HTMLInputElement>) =>{
         this.setState({SearchWord: e.target.value});

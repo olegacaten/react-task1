@@ -1,7 +1,7 @@
 import { Component, ReactNode } from 'react'
 import { DetailedPokemon } from '../../interfaces'
-import PokemonCard from '../PokemonCard'
-
+import PokemonCard from '../PokemonCard/PokemonCard'
+import CardsStyle from './ResultContainer.module.scss'
 export default class ResultContainer extends Component<{results:DetailedPokemon[] | undefined} > {
 
     GetPokemons(res: DetailedPokemon[] | undefined):ReactNode {
@@ -17,7 +17,7 @@ export default class ResultContainer extends Component<{results:DetailedPokemon[
 
   render():ReactNode {
     return (
-      <>{this.GetPokemons(this.props.results)}</>
+      <div className={CardsStyle.CardsContainer}>{this.GetPokemons(this.props.results)}</div>
     )
   }
 }
