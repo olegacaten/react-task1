@@ -13,14 +13,14 @@
    - [x] Linting is run on pre-commit.
 
 4. **Page Layout (20 points)**
-   - [ ] Page is split into two sections:
-     - [ ] Top section contains a Search input and a "Search" button.
-     - [ ] Main section displays a list of results from the selected API when the page is first opened.
-     - [ ] Loader is shown while making a call to the API.
+   - [x] Page is split into two sections:
+     - [x] Top section contains a Search input and a "Search" button.
+     - [x] Main section displays a list of results from the selected API when the page is first opened.
+     - [x] Loader is shown while making a call to the API.
 
 5. **Search Functionality (15 points)**
-   - [ ] Typing into the Search input and clicking the "Search" button displays a loader.
-   - [ ] The list is updated according to the response results for the provided search term.
+   - [x] Typing into the Search input and clicking the "Search" button displays a loader.
+   - [] The list is updated according to the response results for the provided search term.
 
 6. **LocalStorage Integration (15 points)**
    - [ ] The search term is saved in LocalStorage when the "Search" button is clicked.

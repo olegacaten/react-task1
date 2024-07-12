@@ -16,7 +16,7 @@
 		"plugin:prettier/recommended"
 	],
 	"parser": "@typescript-eslint/parser",
-	"plugins": ["@typescript-eslint", "react", "react-hooks"],
+	"plugins": ["@typescript-eslint", "react", "react-hooks", "react-compiler"],
 	"settings": {
 		"react": {
 			"version": "detect"
@@ -29,63 +29,7 @@
 		}
 	},
 	"rules": {
-		"react-hooks/rules-of-hooks": 2,
-		"react-hooks/exhaustive-deps": 1,
-		"react/no-direct-mutation-state": 2,
-		"no-restricted-properties": [
-			"error",
-			{
-				"object": "document",
-				"property": "getElementById"
-			},
-			{
-				"object": "document",
-				"property": "querySelector"
-			},
-			{
-				"object": "document",
-				"property": "querySelectorAll"
-			},
-			{
-				"object": "window",
-				"property": "alert"
-			},
-			{
-				"object": "window",
-				"property": "prompt"
-			},
-			{
-				"object": "window",
-				"property": "confirm"
-			}
-		],
-		"@typescript-eslint/ban-ts-comment": [
-			2,
-			{
-				"ts-ignore": true
-			}
-		],
-		"prettier/prettier": ["error"],
-		"semi": ["error", "always"],
-		"object-curly-spacing": ["error", "always"],
-		"camelcase": "off",
-		"@typescript-eslint/explicit-function-return-type": 0,
-		"@typescript-eslint/no-inferrable-types": [
-			"warn",
-			{
-				"ignoreParameters": true
-			}
-		],
-		"@typescript-eslint/no-explicit-any": 2,
-		"no-unused-vars": [
-			2,
-			{
-				"vars": "all",
-				"args": "after-used",
-				"ignoreRestSiblings": true,
-				"argsIgnorePattern": "^_"
-			}
-		],
-		"react/react-in-jsx-scope": 0
+		"react-compiler/react-compiler": "error",
+		"@typescript-eslint/no-explicit-any": "error"
 	}
 }
