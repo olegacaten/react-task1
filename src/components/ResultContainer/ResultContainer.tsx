@@ -10,7 +10,7 @@ export default class ResultContainer extends Component<{ results: DetailedPokemo
     super(props);
     this.state = {
       currentPage: 1,
-      pokemonsPerPage: 10,
+      pokemonsPerPage: 20,
     };
   }
 

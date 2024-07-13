@@ -1,7 +1,7 @@
 
 
 export interface StateProps {
-  SearchWord: string;
+  SearchWord: string ;
   detailedPokemons_Obj: DetailedPokemon[] | undefined;
   filteredPokemons: DetailedPokemon[] | undefined;
   isLoaded:boolean;

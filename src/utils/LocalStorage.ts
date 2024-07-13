@@ -1,5 +1,6 @@
 export const LocalStorageGet = (key:string):string => {
     return localStorage.getItem(key) || '';
+    
 }
 
 export const LocalStorageWrite = (key:string, SaveItem:string): void =>{

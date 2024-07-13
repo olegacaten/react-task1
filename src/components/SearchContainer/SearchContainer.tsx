@@ -4,8 +4,8 @@ import { LocalStorageGet , LocalStorageWrite } from '../../utils/LocalStorage';
 import { GetAllPokemons } from '../../api/FetchPokemon';
 import ResultContainer from '../ResultContainer/ResultContainer';
 import Loading from '../Loading/Loading';
-
-
+import StylesSearchContainer from './SearchContainer.module.scss';
+import Error_Bbtn from '../Erorrs/Error_Bbtn';
 interface Props {};
 
 export default class SearchContainer extends Component<Props, StateProps> {
@@ -62,17 +62,26 @@ state:StateProps = {
 
   render():ReactNode {
     return (
-        <div className="search">
+      <>
+        <div className={StylesSearchContainer.Search}>
+        <div className={StylesSearchContainer. Search__input}>
+       
         <input
         type="text"
-        className="search__field"
+        className={StylesSearchContainer.Search__input}
         value={this.state.SearchWord}
         onChange={this.handleChangeInputSave}
         />
+        
         <button type="button" className="search__btn"  onClick={this.SearchForPokemon}>
           SEARCH
         </button>
         
+        
+        
+        </div>
+        <Error_Bbtn hasError/>
+        </div>
 
         {this.state.isLoaded ? (
   <ResultContainer results={this.state.filteredPokemons ? (this.state.filteredPokemons) : (this.state.detailedPokemons_Obj)} />
@@ -81,7 +90,8 @@ state:StateProps = {
 )}
 
 
-      </div>
+     
+      </>
     )
   }
 }
