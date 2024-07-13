@@ -1,30 +1,34 @@
-# React + TypeScript + Vite
+## Scoring Checklist
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. **ESLint Setup (15 points)**
+   - [x] ESLint is set up.
+   - [x] Running the lint command produces no errors (warnings may reduce the score).
 
-Currently, two official plugins are available:
+2. **Prettier Setup (15 points)**
+   - [x] Prettier is set up.
+   - [x] The `format:fix` command fixes issues.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. **Husky Setup (10 points)**
+   - [x] Husky is set up.
+   - [x] Linting is run on pre-commit.
 
-## Expanding the ESLint configuration
+4. **Page Layout (20 points)**
+   - [x] Page is split into two sections:
+     - [x] Top section contains a Search input and a "Search" button.
+     - [x] Main section displays a list of results from the selected API when the page is first opened.
+     - [x] Loader is shown while making a call to the API.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+5. **Search Functionality (15 points)**
+   - [x] Typing into the Search input and clicking the "Search" button displays a loader.
+   - [x] The list is updated according to the response results for the provided search term.
 
-- Configure the top-level `parserOptions` property like this:
+6. **LocalStorage Integration (15 points)**
+   - [x] The search term is saved in LocalStorage when the "Search" button is clicked.
+   - [x] Closing the tab and reopening the app retains the previously entered search term in the initial call.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+7. **ErrorBoundary Implementation (10 points)**
+   - [x] Application is wrapped with an ErrorBoundary.
+   - [x] ErrorBoundary logs errors to the console and shows a fallback UI.
+   - [x] There is a button to throw an error for testing.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Total Points: 100
