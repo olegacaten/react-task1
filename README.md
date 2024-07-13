@@ -20,15 +20,15 @@
 
 5. **Search Functionality (15 points)**
    - [x] Typing into the Search input and clicking the "Search" button displays a loader.
-   - [] The list is updated according to the response results for the provided search term.
+   - [x] The list is updated according to the response results for the provided search term.
 
 6. **LocalStorage Integration (15 points)**
-   - [ ] The search term is saved in LocalStorage when the "Search" button is clicked.
-   - [ ] Closing the tab and reopening the app retains the previously entered search term in the initial call.
+   - [x] The search term is saved in LocalStorage when the "Search" button is clicked.
+   - [x] Closing the tab and reopening the app retains the previously entered search term in the initial call.
 
 7. **ErrorBoundary Implementation (10 points)**
-   - [ ] Application is wrapped with an ErrorBoundary.
-   - [ ] ErrorBoundary logs errors to the console and shows a fallback UI.
-   - [ ] There is a button to throw an error for testing.
+   - [x] Application is wrapped with an ErrorBoundary.
+   - [x] ErrorBoundary logs errors to the console and shows a fallback UI.
+   - [x] There is a button to throw an error for testing.
 
 ### Total Points: 100
