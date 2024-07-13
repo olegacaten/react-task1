@@ -3,7 +3,7 @@ import { PokemonResponse, DetailedPokemon } from "../interfaces";
 export async function GetAllPokemons():Promise<DetailedPokemon[]> {
 
   const UrlPokemon: string = 'https://pokeapi.co/api/v2/pokemon';
-  const next = `${UrlPokemon}?limit=20&offset=0`;
+  const next = `${UrlPokemon}?limit=100&offset=0`;
  try {
   
   const Response = await fetch(next);
@@ -36,3 +36,4 @@ async function GetAllDetailedPokemons(url:string):Promise<DetailedPokemon> {
   return result.json();
   
 };
+

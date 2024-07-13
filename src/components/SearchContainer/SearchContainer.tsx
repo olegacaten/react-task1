@@ -3,6 +3,7 @@ import {StateProps} from '../../interfaces/index'
 import { LocalStorageGet , LocalStorageWrite } from '../../utils/LocalStorage';
 import { GetAllPokemons } from '../../api/FetchPokemon';
 import ResultContainer from '../ResultContainer/ResultContainer';
+import Loading from '../Loading/Loading';
 
 
 interface Props {};
@@ -12,33 +13,38 @@ state:StateProps = {
     SearchWord: '',
     detailedPokemons_Obj: undefined,
     filteredPokemons: undefined,
+    isLoaded: false,
 };
 
 
     async componentDidMount() {
+      this.setState({ isLoaded: false });
       const LocalStorageSavedWorld = LocalStorageGet('SearchWord');
       this.setState({ SearchWord: LocalStorageSavedWorld });
       if (this.state.detailedPokemons_Obj === undefined) {
    
         const detailedPokemons_Obj = await GetAllPokemons();
-        console.log(this.state.detailedPokemons_Obj);
-        this.setState({ detailedPokemons_Obj,filteredPokemons: detailedPokemons_Obj });
-    
-        console.log("ComponentdidMountworked");
+        
+        this.setState({ detailedPokemons_Obj,filteredPokemons: detailedPokemons_Obj});
+        this.setState({ isLoaded: true});
       }
       else return;
   
     }
 
     filterPokemons = () => {
+      this.setState({ isLoaded: false });
         const {SearchWord, detailedPokemons_Obj} = this.state;
         if((!detailedPokemons_Obj)||(!SearchWord.trim())){
           this.setState({filteredPokemons:detailedPokemons_Obj });
+          this.setState({ isLoaded: true });
           return;
         }
 
-        const filtered = 
+        const filtered =  detailedPokemons_Obj.filter(item => item.name.toLowerCase().includes(SearchWord.toLowerCase()));
 
+        this.setState({filteredPokemons: filtered});
+        this.setState({ isLoaded: true });
   };
   
 
@@ -50,7 +56,7 @@ state:StateProps = {
 
     SearchForPokemon = () => {
       LocalStorageWrite('SearchWord', this.state.SearchWord);
-
+      this.filterPokemons();
     };
 
 
@@ -67,7 +73,14 @@ state:StateProps = {
           SEARCH
         </button>
         
-        <ResultContainer results={this.state.detailedPokemons_Obj}/>
+
+        {this.state.isLoaded ? (
+  <ResultContainer results={this.state.filteredPokemons ? (this.state.filteredPokemons) : (this.state.detailedPokemons_Obj)} />
+) : (
+  <Loading isLoaded={this.state.isLoaded}/>
+)}
+
+
       </div>
     )
   }

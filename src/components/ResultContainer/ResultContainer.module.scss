@@ -1,4 +1,4 @@
-.CardsContainer {
+.cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -6,11 +6,11 @@
     max-width: 1500px;
     align-items: center;
     @media (max-width: 1024px) { 
-      max-width: 1024px;
+      max-width: 700px;
       }
     
       @media (max-width: 768px) { 
-        max-width: 768px;
+        max-width: 600px;
       }
     
       @media (max-width: 576px) { 
@@ -20,3 +20,13 @@
     
   }
   
+
+  .nothingFound{
+
+
+
+  }
+
+  .cards{
+    
+  }
