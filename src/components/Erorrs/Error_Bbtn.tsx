@@ -1,25 +1,28 @@
-import  { Component } from 'react'
+import React, { useState } from 'react';
 
-interface IError {
-    hasError:boolean;
-}
-export default class Error_Bbtn extends Component<IError> {
-    state = {
-        hasError:false,
-    }
+// Utility function to clear local storage
+const clearLocalStorage = () => {
+  localStorage.removeItem('pokemonsClientSide');
+  localStorage.removeItem('SearchWord');
+};
 
+const Error_Bbtn: React.FC = () => {
+  const [hasError, setHasError] = useState<boolean>(false);
 
-     CreateError = () =>{
-        this.setState({hasError:true})
-    } 
+  const CreateError = () => {
+    clearLocalStorage(); 
+    setHasError(true);
+  };
 
-  render() {
-
-    if(this.state.hasError){
-        throw new Error('Error for you');
-    }
-    return (
-      <div><button onClick={()=> this.CreateError()}>Err</button></div>
-    )
+  if (hasError) {
+    throw new Error('Error for you');
   }
-}
+
+  return (
+    <div>
+      <button onClick={() => CreateError()}>Err</button>
+    </div>
+  );
+};
+
+export default Error_Bbtn;

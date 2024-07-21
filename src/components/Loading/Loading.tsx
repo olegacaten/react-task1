@@ -1,23 +1,20 @@
-import { Component, ReactNode } from "react";
-import LoadingStyle from './Loading.module.scss'
+import React from 'react';
+import LoadingStyle from './Loading.module.scss';
+
+// Define the interface for props
 interface ILoading {
-    isLoaded: boolean;
+  isLoaded: boolean;
 }
 
 
-export default class Loading extends Component<ILoading> {
+const Loading: React.FC<ILoading> = ({ isLoaded }) => {
+  const isLoading = isLoaded;
 
-    render(): ReactNode {
-            const isLoading = this.props;
+  return (
+    <div className={isLoading ? LoadingStyle.active : ''}>
+      <div className={LoadingStyle.spinner}></div>
+    </div>
+  );
+};
 
-        return(
-
-            <div className={isLoading? `${LoadingStyle.active}` : ('')}>
-                    <div className={LoadingStyle.spinner}></div>
-            </div>
-
-        );
-        
-    }
-
-}
+export default Loading;

@@ -1,14 +1,14 @@
 import { Component } from 'react'
-import { DetailedPokemon } from '../../interfaces'
+import { PokemonClientSide } from '../../interfaces'
 import { getTypeBadgeColor,capitalizeFirstLetter} from '../../utils/PokemonCard/PokemonCardUtils';
 import pokemoncardstyle from './PokemonCard.module.scss'
 
-export default class PokemonCard extends Component <{pokemon: DetailedPokemon}> {
+export default class PokemonCard extends Component <{pokemon: PokemonClientSide}> {
   render() {
     const { pokemon } = this.props;
     return (
       <div className={pokemoncardstyle.Card}>
-         <div className={pokemoncardstyle.Card__img}><img src={pokemon.sprites.front_default} alt="Pokemon Sprite" /></div>
+         <div className={pokemoncardstyle.Card__img}><img src={pokemon.sprite} alt="Pokemon Sprite" /></div>
         <div className={pokemoncardstyle.Card__container}>
         <div className={pokemoncardstyle.Card__container__title}>
           <span>  #{pokemon.id} </span> {capitalizeFirstLetter(pokemon.name)}  
