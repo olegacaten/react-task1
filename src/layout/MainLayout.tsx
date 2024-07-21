@@ -1,12 +1,18 @@
-import { Component, ReactNode } from 'react';
-import mainlayout from './MainLayout.module.scss';
+import React from 'react';
+import styles from './MainLayout.module.scss';
 
-export default class MainLayout extends Component<{children:ReactNode}> {
-  render():ReactNode {
-    return (
-      <div className={mainlayout.Container}>
-        {this.props.children}
-      </div>
-    )
-  }
+interface MainLayoutProps {
+  children: React.ReactNode;
 }
+
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  return (
+    <div className={styles.ContainerAbove}>
+    <div className={styles.Container}>
+      {children}
+    </div>
+    </div>
+  );
+};
+
+export default MainLayout;

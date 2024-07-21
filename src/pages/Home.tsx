@@ -1,13 +1,15 @@
-import { Component, ReactNode } from 'react'
+import MainLayout from '../layout/MainLayout';
 import SearchContainer from '../components/SearchContainer/SearchContainer'
 
 
-export default class Home extends Component {
-  render():ReactNode {
+const Home:React.FC = () => {
+
     return (
-      <div>
+      <MainLayout>
         <SearchContainer/>
-      </div>
+      </MainLayout>
     )
-  }
 }
+
+
+export default Home;

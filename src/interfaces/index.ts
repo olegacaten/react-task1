@@ -26,12 +26,18 @@ export interface DetailedPokemon {
   sprites: {
     front_default: string;
   };
-
   types: PokemonType[];
 }
 
-interface PokemonType {
+export interface PokemonType {
   type: {
     name: string;
   };
+}
+
+export interface PokemonClientSide {
+  id: number;
+  name: string;
+  sprite: string;
+  types: PokemonType[];
 }

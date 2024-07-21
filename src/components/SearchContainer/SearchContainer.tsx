@@ -1,97 +1,99 @@
-import { Component, ReactNode } from 'react'
-import {StateProps} from '../../interfaces/index'
-import { LocalStorageGet , LocalStorageWrite } from '../../utils/LocalStorage';
+import React, { useEffect, useState, ChangeEvent } from 'react';
+import { DetailedPokemon, PokemonClientSide } from '../../interfaces/index';
+import { LocalStorageGet, LocalStorageWrite } from '../../utils/LocalStorage';
 import { GetAllPokemons } from '../../api/FetchPokemon';
 import ResultContainer from '../ResultContainer/ResultContainer';
 import Loading from '../Loading/Loading';
 import StylesSearchContainer from './SearchContainer.module.scss';
 import Error_Bbtn from '../Erorrs/Error_Bbtn';
-interface Props {};
 
-export default class SearchContainer extends Component<Props, StateProps> {
-state:StateProps = {
-    SearchWord: '',
-    detailedPokemons_Obj: undefined,
-    filteredPokemons: undefined,
-    isLoaded: false,
-};
+// Define constants for local storage keys
+const LOCAL_STORAGE_KEY = 'pokemonsClientSide';
+const LOCAL_STORAGE_SEARCH_KEY = 'SearchWord';
 
+const SearchContainer: React.FC = () => {
+  const [searchWord, setSearchWord] = useState<string>('');
+  const [filteredPokemons, setFilteredPokemons] = useState<PokemonClientSide[] | undefined>(undefined);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-    async componentDidMount() {
-      this.setState({ isLoaded: false });
-      const LocalStorageSavedWorld = LocalStorageGet('SearchWord');
-      this.setState({ SearchWord: LocalStorageSavedWorld });
-      if (this.state.detailedPokemons_Obj === undefined) {
-   
-        const detailedPokemons_Obj = await GetAllPokemons();
-        
-        this.setState({ detailedPokemons_Obj,filteredPokemons: detailedPokemons_Obj});
-        this.setState({ isLoaded: true});
+  // Fetch data and initialize state
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoaded(false);
+      const localStorageSavedWord = LocalStorageGet(LOCAL_STORAGE_SEARCH_KEY);
+      setSearchWord(localStorageSavedWord || '');
+
+      const storedPokemons = LocalStorageGet(LOCAL_STORAGE_KEY);
+      if (storedPokemons) {
+        setFilteredPokemons(JSON.parse(storedPokemons));
+        setIsLoaded(true);
+      } else {
+        const pokemons: DetailedPokemon[] = await GetAllPokemons();
+
+        const simplifiedPokemons: PokemonClientSide[] = pokemons.map(pokemon => ({
+          id: pokemon.id,
+          name: pokemon.name,
+          sprite: pokemon.sprites.front_default,
+          types: pokemon.types,
+        }));
+
+        LocalStorageWrite(LOCAL_STORAGE_KEY, JSON.stringify(simplifiedPokemons));
+        setFilteredPokemons(simplifiedPokemons);
+        setIsLoaded(true);
       }
-      else return;
-  
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to run only once on mount
+
+  // Filter pokemons based on search word
+  const filterPokemons = () => {
+    if (!filteredPokemons || !searchWord.trim()) {
+      return filteredPokemons;
     }
 
-    filterPokemons = () => {
-      this.setState({ isLoaded: false });
-        const {SearchWord, detailedPokemons_Obj} = this.state;
-        if((!detailedPokemons_Obj)||(!SearchWord.trim())){
-          this.setState({filteredPokemons:detailedPokemons_Obj });
-          this.setState({ isLoaded: true });
-          return;
-        }
-
-        const filtered =  detailedPokemons_Obj.filter(item => item.name.toLowerCase().includes(SearchWord.toLowerCase()));
-
-        this.setState({filteredPokemons: filtered});
-        this.setState({ isLoaded: true });
+    return filteredPokemons.filter(item =>
+      item.name.toLowerCase().includes(searchWord.toLowerCase())
+    );
   };
-  
 
+  // Handle input change
+  const handleChangeInputSave = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchWord(e.target.value);
+  };
 
-    handleChangeInputSave = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        this.setState({SearchWord: e.target.value});
-    };
+  // Perform search and update local storage
+  const searchForPokemon = () => {
+    LocalStorageWrite(LOCAL_STORAGE_SEARCH_KEY, searchWord);
+  };
 
+  // Get the filtered pokemons based on the current search word
+  const displayedPokemons = filterPokemons();
 
-    SearchForPokemon = () => {
-      LocalStorageWrite('SearchWord', this.state.SearchWord);
-      this.filterPokemons();
-    };
-
-
-  render():ReactNode {
-    return (
-      <>
-        <div className={StylesSearchContainer.Search}>
-        <div className={StylesSearchContainer. Search__input}>
-       
-        <input
-        type="text"
-        className={StylesSearchContainer.Search__input}
-        value={this.state.SearchWord}
-        onChange={this.handleChangeInputSave}
-        />
-        
-        <button type="button" className="search__btn"  onClick={this.SearchForPokemon}>
-          SEARCH
-        </button>
-        
-        
-        
+  return (
+    <>
+      <div className={StylesSearchContainer.Search}>
+        <div className={StylesSearchContainer.Search__input}>
+          <input
+            type="text"
+            className={StylesSearchContainer.Search__input}
+            value={searchWord}
+            onChange={handleChangeInputSave}
+          />
+          <button type="button" className="search__btn" onClick={searchForPokemon}>
+            SEARCH
+          </button>
         </div>
-        <Error_Bbtn hasError/>
-        </div>
+        <Error_Bbtn />
+      </div>
 
-        {this.state.isLoaded ? (
-  <ResultContainer results={this.state.filteredPokemons ? (this.state.filteredPokemons) : (this.state.detailedPokemons_Obj)} />
-) : (
-  <Loading isLoaded={this.state.isLoaded}/>
-)}
+      {isLoaded ? (
+        <ResultContainer pokemon={displayedPokemons} />
+      ) : (
+        <Loading isLoaded={isLoaded} />
+      )}
+    </>
+  );
+};
 
-
-     
-      </>
-    )
-  }
-}
+export default SearchContainer;

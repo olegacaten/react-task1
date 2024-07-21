@@ -1,12 +1,7 @@
-import {Component, ReactNode} from 'react'
+const Fallback:React.FC = () => {
 
-class Fallback extends Component {
-
-render(): ReactNode {
     return  <p>Sorry, something went wrong we are really sorry, try again later</p>;
       
-}
-
 }
 
 

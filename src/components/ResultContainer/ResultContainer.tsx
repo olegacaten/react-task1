@@ -1,61 +1,44 @@
-import { Component, ReactNode } from 'react'
-import { DetailedPokemon } from '../../interfaces'
-import PokemonCard from '../PokemonCard/PokemonCard'
-import CardsStyle from './ResultContainer.module.scss'
-export default class ResultContainer extends Component<{ results: DetailedPokemon[] | undefined }, {
-  currentPage: number;
-  pokemonsPerPage: number;
-}> {
-  constructor(props: { results: DetailedPokemon[] | undefined }) {
-    super(props);
-    this.state = {
-      currentPage: 1,
-      pokemonsPerPage: 20,
-    };
-  }
+// src/components/ResultContainer/ResultContainer.tsx
+import React, { useState } from 'react';
+import PokemonCard from '../PokemonCard/PokemonCard';
+import CardsStyle from './ResultContainer.module.scss';
+import { PokemonClientSide } from '../../interfaces';
+import Pagination from './Pagination/Pagination'; 
 
-  paginate = (PageNumber: number) => {
-    this.setState({ currentPage: PageNumber })
-  };
-
-
-  render(): ReactNode {
-
-
-    const IndexOfLastPokemon = this.state.currentPage * this.state.pokemonsPerPage;
-    const IndexOfFirstPokemon = IndexOfLastPokemon - this.state.pokemonsPerPage;
-
-    const currentPagePokemons = this.props.results && this.props.results.slice(IndexOfFirstPokemon, IndexOfLastPokemon);
-
-    const PageNumbers: number[] = [];
-    for (let i = 1; i <= ((this.props.results?.length || 0) / this.state.pokemonsPerPage); i++) {
-      PageNumbers.push(i);
-    }
-
-
-    return (
-      <div className={CardsStyle.CardsContainer}>
-
-        {currentPagePokemons && this.props.results && this.props.results.length > 0 ? (
-            <div>
-          <div className={CardsStyle.cards}>
-
-            {currentPagePokemons.map((pokemon) => (
-              <PokemonCard key={pokemon.id} pokemon={pokemon} />
-            ))}
-            </div>
-            <nav>
-              {PageNumbers.map((number) => (
-                <button key={number} onClick={() => this.paginate(number)}> {number}</button>
-
-              ))} 
-              </nav>
-          </div>
-        ) : (
-          <div className={CardsStyle.nothingFound}>Nothing found</div>
-
-        )}
-      </div>
-    );
-  }
+interface ResultContainerProps {
+  pokemon: PokemonClientSide[] | undefined;
 }
+
+const ResultContainer: React.FC<ResultContainerProps> = ({ pokemon }) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const pokemonsPerPage = 20;
+
+  const indexOfLastPokemon = currentPage * pokemonsPerPage;
+  const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+  const currentPagePokemons = pokemon?.slice(indexOfFirstPokemon, indexOfLastPokemon);
+
+  const totalPages = Math.ceil((pokemon?.length || 0) / pokemonsPerPage);
+
+  return (
+    <div className={CardsStyle.CardsContainer}>
+      {currentPagePokemons && currentPagePokemons.length > 0 ? (
+        <div>
+          <div className={CardsStyle.cards}>
+            {currentPagePokemons.map((item) => (
+              <PokemonCard key={item.id} pokemon={item} />
+            ))}
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+      ) : (
+        <div className={CardsStyle.nothingFound}>Nothing found</div>
+      )}
+    </div>
+  );
+};
+
+export default ResultContainer;

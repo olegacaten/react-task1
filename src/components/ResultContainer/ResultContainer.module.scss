@@ -1,32 +1,46 @@
+.CardsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
 .cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 16px;
-    max-width: 1500px;
-    align-items: center;
-    @media (max-width: 1024px) { 
-      max-width: 700px;
-      }
-    
-      @media (max-width: 768px) { 
-        max-width: 600px;
-      }
-    
-      @media (max-width: 576px) { 
-        max-width: 576px;
-   
-      }
-    
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 1500px;
+  width: 100%;
 
-  .nothingFound{
-
-
-
+  @media (max-width: 1024px) {
+    max-width: 700px;
   }
 
-  .cards{
-    
+  @media (max-width: 768px) {
+    max-width: 600px;
   }
+
+  @media (max-width: 576px) {
+    max-width: 576px;
+  }
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 150px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.nothingFound {
+  font-size: 1.5rem;
+  color: #888;
+  text-align: center;
+}
